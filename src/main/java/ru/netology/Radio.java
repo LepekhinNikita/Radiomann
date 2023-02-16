@@ -3,6 +3,7 @@ package ru.netology;
 public class Radio {
     private int currentChannel;
 
+    
     private int currentVolume;
 
     public int getCurrentVolume() {
