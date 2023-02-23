@@ -2,8 +2,17 @@ package ru.netology;
 
 public class Radio {
     private int currentChannel;
-
     private int currentVolume;
+    private int maxChannel;
+
+    public Radio(int countChannel) {
+        maxChannel = countChannel - 1;
+    }
+
+    public Radio() {
+        maxChannel = 9;
+    }
+
 
     public int getCurrentVolume() {
         return currentVolume;
@@ -17,39 +26,44 @@ public class Radio {
         if (newCurrentChannel < 0) {
             return;
         }
-        if (newCurrentChannel > 10) {
+        if (newCurrentChannel > maxChannel) {
             return;
         }
-        currentChannel = newCurrentChannel;
-    }
-
-
-    public void nextChannel() {
-        if (currentChannel < 10) {
-            currentChannel = currentChannel + 1;
-        } else currentChannel = 0;
-    }
-
-    public void prevChannel() {
-        if (currentChannel == 0) {
-            currentChannel = 9;
-        } else currentChannel = currentChannel - 1;
+        this.currentChannel = newCurrentChannel;
     }
 
     public void setCurrentVolume(int newCurrentVolume) {
         if (newCurrentVolume < 0) {
             return;
         }
-        if (newCurrentVolume > 11) {
+        if (newCurrentVolume > 100) {
             return;
         }
-        currentVolume = newCurrentVolume;
+        this.currentVolume = newCurrentVolume;
+    }
+
+    public void nextChannel() {
+        if (currentChannel != maxChannel) {
+            currentChannel = currentChannel + 1;
+            return;
+        }
+        currentChannel = 0;
+    }
+
+    public void prevChannel() {
+        if (currentChannel != 0) {
+            currentChannel = currentChannel - 1;
+            return;
+        }
+        currentChannel = maxChannel;
     }
 
     public void increaseVolume() {
-        if (currentVolume < 11) {
+        if (currentVolume != 100) {
             currentVolume = currentVolume + 1;
-        } else currentVolume = 10;
+            return;
+        }
+        currentVolume = 0;
     }
 
     public void decreaseVolume() {
