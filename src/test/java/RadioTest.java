@@ -5,22 +5,43 @@ import org.junit.jupiter.api.Test;
 
 public class RadioTest {
     @Test
-    public void shouldSetChannelWithoutUser() {
-        Radio rad = new Radio(10);
-        Assertions.assertEquals(10, rad.getMaxChannel());
+    public void shouldSetChannel() {
+        Radio rad = new Radio();
 
+        rad.setCurrentChannel(2);
+
+        int expected = 2;
+        int actual = rad.getCurrentChannel();
+
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldSetChannelUser() {
-        Radio rad = new Radio(0, 9);
-        Assertions.assertEquals(0, rad.minChannel);
-        Assertions.assertEquals(9, rad.maxChannel);
+    public void shouldNextChannelAboveMax() {
+        Radio rad = new Radio();
+        rad.setCurrentChannel(9);
+        rad.nextChannel();
+
+        int expected = 0;
+        int actual = rad.getCurrentChannel();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSetChannelManual() {
+        Radio rad = new Radio(50);
+
+        rad.setCurrentChannel(20);
+
+        int expected = 20;
+        int actual = rad.getCurrentChannel();
+
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void shouldNotSetChannelAboveMax() {
-        Radio rad = new Radio(15);
+        Radio rad = new Radio();
 
         rad.setCurrentChannel(15);
 
@@ -33,7 +54,7 @@ public class RadioTest {
 
     @Test
     public void shouldPrevChannel() {
-        Radio rad = new Radio(7);
+        Radio rad = new Radio();
         rad.setCurrentChannel(7);
 
         rad.prevChannel();
@@ -47,7 +68,7 @@ public class RadioTest {
 
     @Test
     public void shouldPrevChannelBelow0() {
-        Radio rad = new Radio(0);
+        Radio rad = new Radio();
         rad.setCurrentChannel(0);
 
         rad.prevChannel();
@@ -61,10 +82,10 @@ public class RadioTest {
 
     @Test
     public void shouldNextChannel() {
-        Radio rad = new Radio(7);
-        rad.setCurrentChannel(8);
+        Radio rad = new Radio();
+        rad.setCurrentChannel(7);
 
-        //       rad.nextChannel();
+        rad.nextChannel();
 
         int expected = 8;
         int actual = rad.getCurrentChannel();
@@ -74,22 +95,8 @@ public class RadioTest {
     }
 
     @Test
-    public void shouldNextChannelAboveMax() {
-        Radio rad = new Radio(10);
-        rad.setCurrentChannel(10);
-
-        rad.nextChannel();
-
-        int expected = 0;
-        int actual = rad.getCurrentChannel();
-
-        Assertions.assertEquals(expected, actual);
-
-    }
-
-    @Test
     public void shouldSetChannelBelow0() {
-        Radio rad = new Radio(-100);
+        Radio rad = new Radio();
 
         rad.setCurrentChannel(-100);
 
@@ -99,17 +106,15 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-
     @Test
     public void shouldIncreaseVolumeInRange() {
+        Radio rad = new Radio();
 
-        Radio rad = new Radio(45);
-
-        rad.setCurrentVolume(45);
+        rad.setCurrentVolume(7);
 
         rad.increaseVolume();
 
-        int expected = 46;
+        int expected = 8;
         int actual = rad.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
@@ -118,13 +123,13 @@ public class RadioTest {
 
     @Test
     public void shouldIncreaseVolumeOutsideRange() {
-        Radio rad = new Radio(101);
+        Radio rad = new Radio();
 
-        rad.setCurrentVolume(101);
+        rad.setCurrentVolume(100);
 
         rad.increaseVolume();
 
-        int expected = 1;
+        int expected = 0;
         int actual = rad.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
@@ -132,13 +137,13 @@ public class RadioTest {
 
     @Test
     public void shouldDecreaseVolumeInRange() {
-        Radio rad = new Radio(75);
+        Radio rad = new Radio();
 
-        rad.setCurrentVolume(75);
+        rad.setCurrentVolume(5);
 
         rad.decreaseVolume();
 
-        int expected = 74;
+        int expected = 4;
         int actual = rad.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
@@ -146,7 +151,7 @@ public class RadioTest {
 
     @Test
     public void shouldDecreaseVolumeOutsideRange() {
-        Radio rad = new Radio(-1);
+        Radio rad = new Radio();
 
         rad.setCurrentVolume(-1);
 
@@ -160,7 +165,7 @@ public class RadioTest {
 
     @Test
     public void shouldNotSetVolumeAboveMax() {
-        Radio rad = new Radio(150);
+        Radio rad = new Radio();
 
         rad.setCurrentVolume(150);
 
